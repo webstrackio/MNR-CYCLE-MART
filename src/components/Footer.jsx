@@ -18,7 +18,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="#home" className="flex items-center gap-2.5 mb-4">
-              <Bike className="w-7 h-7 text-brand" />
+              <Bike className="w-10 h-10 text-brand" />
               <span className="text-cream font-bold text-lg">
                 M N R <span className="text-brand">Cycle Mart</span>
               </span>

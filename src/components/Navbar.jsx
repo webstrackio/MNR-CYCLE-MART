@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <a href="#home" className="flex items-center gap-2.5 group">
-            <Bike className="w-7 h-7 text-brand group-hover:scale-110 transition-transform" />
+            <Bike className="w-10 h-10 text-brand group-hover:scale-110 transition-transform" />
             <span className="text-cream font-bold text-lg lg:text-xl tracking-tight">
               M N R <span className="text-brand">Cycle Mart</span>
             </span>
