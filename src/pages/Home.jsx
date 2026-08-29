@@ -9,6 +9,7 @@ import Reviews from '../components/Reviews';
 import Contact from '../components/Contact';
 import LocationMap from '../components/LocationMap';
 import Footer from '../components/Footer';
+import ScrollToTop from '../components/ScrollToTop';
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <Contact />
       <LocationMap />
       <Footer />
+      <ScrollToTop />
     </>
   );
 }

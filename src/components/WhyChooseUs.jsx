@@ -44,7 +44,7 @@ const reasons = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="bg-secondary py-20 lg:py-28">
+    <section className="bg-surface py-20 lg:py-28">
       <div className="section-padding">
         <SectionTitle
           title="Why Choose M N R Cycle Mart?"
@@ -61,14 +61,14 @@ export default function WhyChooseUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="card group p-6 text-center hover:border-brand/30 transition-all duration-500"
+                className="card group p-6 text-center transition-all duration-500"
               >
-                <div className="w-14 h-14 bg-brand/10 rounded-2xl flex items-center justify-center
-                                mx-auto mb-4 group-hover:bg-brand/20 group-hover:scale-110 transition-all duration-300">
-                  <Icon className="w-7 h-7 text-brand" />
+                <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center
+                                mx-auto mb-4 group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
+                  <Icon className="w-7 h-7 text-accent" />
                 </div>
-                <h3 className="text-cream font-bold text-lg mb-2">{reason.title}</h3>
-                <p className="text-cream/50 text-sm">{reason.description}</p>
+                <h3 className="text-txt font-bold text-lg mb-2">{reason.title}</h3>
+                <p className="text-muted text-sm">{reason.description}</p>
               </motion.div>
             );
           })}

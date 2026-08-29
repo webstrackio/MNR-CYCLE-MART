@@ -4,7 +4,7 @@ import brands from '../data/brands';
 
 export default function Brands() {
   return (
-    <section id="brands" className="bg-secondary py-20 lg:py-28">
+    <section id="brands" className="bg-surface py-20 lg:py-28">
       <div className="section-padding">
         <SectionTitle
           title="Brands You Can Trust"

@@ -4,7 +4,7 @@ import services from '../data/services';
 
 export default function Services() {
   return (
-    <section id="services" className="bg-primary py-20 lg:py-28">
+    <section id="services" className="bg-bg py-20 lg:py-28">
       <div className="section-padding">
         <SectionTitle
           title="More Than Just Cycles"

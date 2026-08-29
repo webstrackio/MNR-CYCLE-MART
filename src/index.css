@@ -2,34 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark Theme (default) */
+.dark {
+  --color-bg: 23 24 29;
+  --color-surface: 41 44 53;
+  --color-accent: 224 145 69;
+  --color-text: 252 217 184;
+  --color-muted: 180 150 120;
+  --color-border: 51 65 85;
+}
+
+/* Light Theme */
+.light {
+  --color-bg: 255 255 255;
+  --color-surface: 41 44 53;
+  --color-accent: 224 145 69;
+  --color-text: 252 217 184;
+  --color-muted: 180 150 120;
+  --color-border: 51 65 85;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   body {
-    @apply bg-primary text-cream font-sans;
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .hero-overlay {
+    background: linear-gradient(to bottom, rgba(23, 24, 29, 0.7), rgba(23, 24, 29, 0.5), #17181D);
+  }
+
   ::selection {
-    @apply bg-brand/30 text-cream;
+    background-color: rgba(224, 145, 69, 0.3);
+    color: rgb(var(--color-text));
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-brand text-primary font-semibold px-8 py-3 rounded-full
-           hover:bg-brand/90 transition-all duration-300
-           shadow-lg shadow-brand/20 hover:shadow-brand/30
-           inline-flex items-center gap-2;
+    @apply bg-accent text-white font-semibold px-8 py-3 rounded-full
+           shadow-lg shadow-accent/20
+           inline-flex items-center gap-2
+           relative overflow-hidden;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    @apply shadow-accent/40;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(224, 145, 69, 0.4);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  .btn-primary svg {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary:hover svg {
+    transform: translateX(4px);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
   }
 
   .btn-outline {
-    @apply border-2 border-cream/30 text-cream font-semibold px-8 py-3 rounded-full
-           hover:bg-cream/10 hover:border-cream/60 transition-all duration-300
-           inline-flex items-center gap-2;
+    @apply border-2 border-accent/30 text-accent font-semibold px-8 py-3 rounded-full
+           inline-flex items-center gap-2
+           relative overflow-hidden;
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline:hover {
+    @apply bg-accent text-white border-accent;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(224, 145, 69, 0.25);
+  }
+
+  .btn-outline:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  .btn-outline svg {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-outline:hover svg {
+    transform: translateX(4px);
+  }
+
+  .btn-outline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(224, 145, 69, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn-outline:hover::before {
+    left: 100%;
   }
 
   .section-padding {
@@ -37,13 +134,26 @@
   }
 
   .card {
-    @apply bg-secondary rounded-2xl border border-white/5
-           hover:border-brand/20 transition-all duration-500;
+    @apply bg-surface rounded-2xl border transition-all duration-500;
+    border-color: rgb(var(--color-border));
+  }
+
+  .card:hover {
+    border-color: rgb(var(--color-accent) / 0.3);
   }
 }
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-cream to-brand bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-accent to-blue-400 bg-clip-text text-transparent;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
