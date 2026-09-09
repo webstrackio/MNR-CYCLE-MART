@@ -82,7 +82,7 @@ export default function ProductDetails() {
     return (
       <>
         <Navbar />
-        <div className="bg-bg min-h-screen pt-32 pb-24">
+        <div className="bg-bg min-h-svh pt-32 pb-24">
           <div className="section-padding text-center">
             <h1 className="text-3xl font-bold text-txt mb-4">Product Not Found</h1>
             <p className="text-muted mb-8">Sorry, we couldn't find that product.</p>

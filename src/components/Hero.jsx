@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center bg-bg overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-screen z-0 bg-bg overflow-hidden">
+    <section id="home" className="relative min-h-svh flex items-center bg-bg overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-svh z-0 bg-bg overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1920&h=1080&fit=crop"
           alt="Premium cycle"
