@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom';
 import { MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { AuthProvider } from './context/AuthContext';
 import App from './App';
 import './index.css';
 
@@ -12,9 +13,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <HashRouter>
       <ThemeProvider>
         <WishlistProvider>
-          <MotionConfig reducedMotion="user">
-            <App />
-          </MotionConfig>
+          <AuthProvider>
+            <MotionConfig reducedMotion="user">
+              <App />
+            </MotionConfig>
+          </AuthProvider>
         </WishlistProvider>
       </ThemeProvider>
     </HashRouter>

@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Menu, X, Bike, MapPin, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Menu, X, Bike, LogIn, LogOut, LayoutDashboard, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useAuth } from '../context/AuthContext';
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -144,10 +145,18 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [wishOpen, setWishOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const closeMenu = () => setIsOpen(false);
   const closeWish = useCallback(() => setWishOpen(false), []);
   const toggleWish = useCallback(() => setWishOpen((v) => !v), []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    closeMenu();
+  };
 
   return (
     <>
@@ -184,10 +193,23 @@ export default function Navbar() {
               >
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
-              <Link to="/#contact" className="btn-primary text-sm py-2.5 px-5">
-                <MapPin className="w-4 h-4" />
-                Visit Our Mart
-              </Link>
+              {user ? (
+                <>
+                  <Link to="/dashboard" className="btn-outline text-sm py-2.5 px-5">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                  <button onClick={handleLogout} className="btn-primary text-sm py-2.5 px-5">
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link to="/login" className="btn-primary text-sm py-2.5 px-5">
+                  <LogIn className="w-4 h-4" />
+                  Login
+                </Link>
+              )}
             </div>
 
             <div className="flex items-center lg:hidden">
@@ -242,14 +264,34 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <Link
-            to="/#contact"
-            onClick={closeMenu}
-            className="btn-primary text-sm py-3 justify-center mt-2 mx-4"
-          >
-            <MapPin className="w-4 h-4" />
-            Visit Our Mart
-          </Link>
+          {user ? (
+            <>
+              <Link
+                to="/dashboard"
+                onClick={closeMenu}
+                className="btn-outline text-sm py-3 justify-center mt-2 mx-4"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="btn-primary text-sm py-3 justify-center mt-2 mx-4 w-[calc(100%-32px)]"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              onClick={closeMenu}
+              className="btn-primary text-sm py-3 justify-center mt-2 mx-4"
+            >
+              <LogIn className="w-4 h-4" />
+              Login
+            </Link>
+          )}
           <button
             onClick={toggleTheme}
             className="flex items-center gap-2 px-4 py-3 text-muted hover:text-accent hover:bg-surface rounded-lg text-sm font-medium transition-all duration-300 mx-4 mt-1"
