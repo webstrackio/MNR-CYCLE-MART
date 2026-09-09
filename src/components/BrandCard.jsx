@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
+import { viewportOnce } from '../lib/motion';
 
 export default function BrandCard({ brand, index }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={viewportOnce}
       transition={{ duration: 0.4, delay: index * 0.08 }}
       className="card group p-8 text-center transition-all duration-500"
     >

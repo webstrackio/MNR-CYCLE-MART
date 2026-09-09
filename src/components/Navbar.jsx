@@ -111,9 +111,9 @@ function WishlistButton({ wishOpen, onToggle, onClose, compact = false, onToggle
                   </div>
                   <button
                     onClick={() => toggleWishlist(item.id)}
-                    className={`text-muted hover:text-red-400 transition-colors ${
-                      compact ? 'p-1' : 'p-1.5'
-                    }`}
+className={`text-muted hover:text-accent transition-colors ${
+  compact ? 'p-1' : 'p-1.5'
+}`}
                     aria-label={`Remove ${item.title} from wishlist`}
                   >
                     <Trash2 className={compact ? 'w-3.5 h-3.5' : 'w-4 h-4'} />
@@ -151,11 +151,11 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-bg/60 backdrop-blur-md border-b border-borderc/40 shadow-lg shadow-black/5 will-change-transform">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-surface/60 backdrop-blur-md border-b border-borderc/40 shadow-lg shadow-black/5 will-change-transform">
         <div className="section-padding">
           <div className="flex items-center justify-between h-16 lg:h-20">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <Bike className="w-10 h-10 text-[#f97316] group-hover:scale-110 transition-transform" />
+              <Bike className="w-10 h-10 text-accent group-hover:scale-110 transition-transform" />
               <span className="text-txt font-bold text-lg lg:text-xl tracking-tight">
                 M N R <span className="text-accent">Cycle Mart</span>
               </span>
@@ -225,7 +225,7 @@ export default function Navbar() {
       />
 
       <div
-        className={`lg:hidden fixed top-16 right-0 bottom-0 w-1/2 min-w-[220px] bg-bg/60 backdrop-blur-md border-l border-borderc/40 z-50 overflow-y-auto transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed top-16 right-0 bottom-0 w-1/2 min-w-[220px] bg-surface/60 backdrop-blur-md border-l border-borderc/40 z-50 overflow-y-auto transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

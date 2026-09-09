@@ -13,9 +13,21 @@ export default {
           DEFAULT: 'rgb(var(--color-surface) / <alpha-value>)',
           raw: 'rgb(var(--color-surface))',
         },
+        card: {
+          DEFAULT: 'rgb(var(--color-card) / <alpha-value>)',
+          raw: 'rgb(var(--color-card))',
+        },
         accent: {
           DEFAULT: 'rgb(var(--color-accent) / <alpha-value>)',
           raw: 'rgb(var(--color-accent))',
+        },
+        accenthover: {
+          DEFAULT: 'rgb(var(--color-accent-hover) / <alpha-value>)',
+          raw: 'rgb(var(--color-accent-hover))',
+        },
+        accentlight: {
+          DEFAULT: 'rgb(var(--color-accent-soft) / <alpha-value>)',
+          raw: 'rgb(var(--color-accent-soft))',
         },
         txt: {
           DEFAULT: 'rgb(var(--color-text) / <alpha-value>)',

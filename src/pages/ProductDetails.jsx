@@ -22,6 +22,7 @@ import Navbar from '../components/Navbar';
 import ScrollToTop from '../components/ScrollToTop';
 import cycles from '../data/cycles';
 import { useWishlist } from '../context/WishlistContext';
+import { viewportOnce } from '../lib/motion';
 
 const WHATSAPP = '918919267847';
 const PHONE = 'tel:+918919267847';
@@ -156,8 +157,8 @@ export default function ProductDetails() {
                   <span className="absolute top-4 left-4 bg-accent/90 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
                     {cycle.category}
                   </span>
-                  <span className="absolute top-4 right-4 bg-surface/90 backdrop-blur text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="absolute top-4 right-4 bg-surface/90 backdrop-blur text-accent text-xs font-semibold px-3 py-1.5 rounded-full inline-flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                     In Stock
                   </span>
                 </div>
@@ -183,7 +184,7 @@ export default function ProductDetails() {
 
               {/* Details */}
               <div className="p-6 sm:p-10 lg:p-12 flex flex-col">
-                <span className="inline-flex items-center gap-2 text-emerald-400 text-sm font-semibold mb-3">
+                <span className="inline-flex items-center gap-2 text-accent text-sm font-semibold mb-3">
                   <CheckCircle2 className="w-5 h-5" />
                   Availability: In Stock
                 </span>
@@ -242,7 +243,7 @@ export default function ProductDetails() {
                       href={whatsappLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex flex-1 min-w-full sm:min-w-[180px] justify-center items-center gap-2 rounded-full border-2 border-emerald-500/60 text-emerald-400 font-semibold px-8 py-3 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300"
+                      className="inline-flex flex-1 min-w-full sm:min-w-[180px] justify-center items-center gap-2 rounded-full border-2 border-accent/60 text-accent font-semibold px-8 py-3 hover:bg-accent hover:text-white hover:border-accent transition-all duration-300"
                     >
                       <MessageCircle className="w-5 h-5" />
                       WhatsApp Enquiry
@@ -267,7 +268,7 @@ export default function ProductDetails() {
                       onClick={handleShare}
                       className="flex-1 min-w-[150px] inline-flex items-center justify-center gap-2 rounded-full border border-border text-muted hover:text-accent hover:border-accent/50 px-5 py-2.5 text-sm font-semibold transition-all duration-300"
                     >
-                      {copied ? <Copy className="w-5 h-5 text-emerald-400" /> : <Share2 className="w-5 h-5" />}
+                      {copied ? <Copy className="w-5 h-5 text-accent" /> : <Share2 className="w-5 h-5" />}
                       {copied ? 'Link Copied' : 'Share'}
                     </button>
                   </div>
@@ -286,7 +287,7 @@ export default function ProductDetails() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
+              viewport={viewportOnce}
               transition={{ duration: 0.5 }}
               className="card mt-12 overflow-hidden"
             >
@@ -407,7 +408,7 @@ export default function ProductDetails() {
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex flex-1 justify-center items-center gap-2 rounded-full bg-emerald-500 text-white font-semibold text-sm px-4 py-3"
+          className="inline-flex flex-1 justify-center items-center gap-2 rounded-full bg-accent/15 text-accent border border-accent/60 font-semibold text-sm px-4 py-3"
         >
           <MessageCircle className="w-4 h-4" />
           WhatsApp

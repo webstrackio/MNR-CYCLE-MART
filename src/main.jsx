@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { WishlistProvider } from './context/WishlistContext';
 import App from './App';
@@ -11,7 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <HashRouter>
       <ThemeProvider>
         <WishlistProvider>
-          <App />
+          <MotionConfig reducedMotion="user">
+            <App />
+          </MotionConfig>
         </WishlistProvider>
       </ThemeProvider>
     </HashRouter>

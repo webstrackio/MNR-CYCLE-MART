@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { viewportOnce } from '../lib/motion';
 
 export default function CycleCard({ cycle, index }) {
   return (
@@ -11,7 +12,7 @@ export default function CycleCard({ cycle, index }) {
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
+        viewport={viewportOnce}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         className="card h-full overflow-hidden"
       >

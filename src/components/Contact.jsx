@@ -8,6 +8,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import SectionTitle from './SectionTitle';
+import { viewportOnce } from '../lib/motion';
 
 const contactInfo = [
   {
@@ -60,7 +61,7 @@ export default function Contact() {
                   key={item.label}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
+                  viewport={viewportOnce}
                   transition={{ duration: 0.4, delay: index * 0.08 }}
                   className={`card p-6 transition-all duration-500 ${
                     item.label === 'Opening Hours'

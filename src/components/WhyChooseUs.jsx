@@ -8,6 +8,7 @@ import {
   ThumbsUp,
 } from 'lucide-react';
 import SectionTitle from './SectionTitle';
+import { viewportOnce } from '../lib/motion';
 
 const reasons = [
   {
@@ -59,7 +60,7 @@ export default function WhyChooseUs() {
                 key={reason.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
+                viewport={viewportOnce}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
                 className="card group p-6 text-center transition-all duration-500"
               >

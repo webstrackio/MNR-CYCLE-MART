@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import SectionTitle from './SectionTitle';
 import reviews from '../data/reviews';
+import { viewportOnce } from '../lib/motion';
 
 export default function Reviews() {
   return (
@@ -18,7 +19,7 @@ export default function Reviews() {
               key={review.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
+              viewport={viewportOnce}
               transition={{ duration: 0.4, delay: index * 0.08 }}
               className="card p-6 transition-all duration-500"
             >
