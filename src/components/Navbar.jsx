@@ -221,6 +221,13 @@ export default function Navbar() {
                 onToggleExtra={closeMenu}
               />
               <button
+                onClick={toggleTheme}
+                className="p-2 text-muted hover:text-accent transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+              <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 text-txt hover:text-accent transition-colors"
                 aria-label="Toggle menu"
