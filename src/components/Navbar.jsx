@@ -221,13 +221,6 @@ export default function Navbar() {
                 onToggleExtra={closeMenu}
               />
               <button
-                onClick={toggleTheme}
-                className="p-2 text-muted hover:text-accent transition-colors"
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-              <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 text-txt hover:text-accent transition-colors"
                 aria-label="Toggle menu"
@@ -292,13 +285,7 @@ export default function Navbar() {
               Login
             </Link>
           )}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-2 px-4 py-3 text-muted hover:text-accent hover:bg-surface rounded-lg text-sm font-medium transition-all duration-300 mx-4 mt-1"
-          >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-          </button>
+
         </div>
       </div>
     </>

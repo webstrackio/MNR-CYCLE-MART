@@ -109,7 +109,7 @@ export default function Login() {
       {/* ── Content ── */}
       <div className="relative z-10 flex flex-col items-center px-4 pt-10 pb-12 min-h-screen">
         {/* Back to Home */}
-        <div className="fixed top-5 left-5 z-20">
+        <div className="self-start sticky top-5 ml-4 sm:ml-8 z-20">
           <Link
             to="/"
             className="inline-flex items-center gap-2 bg-surface/80 backdrop-blur-sm border border-borderc text-muted hover:text-accent hover:border-accent/50 font-medium transition-all text-sm px-4 py-2.5 rounded-xl shadow-lg"
