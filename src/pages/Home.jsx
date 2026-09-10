@@ -2,6 +2,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Cycles from '../components/Cycles';
+
 import Brands from '../components/Brands';
 import Services from '../components/Services';
 import WhyChooseUs from '../components/WhyChooseUs';
