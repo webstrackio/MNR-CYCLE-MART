@@ -1,22 +1,24 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Menu, X, Bike, LogIn, LogOut, LayoutDashboard, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink } from 'lucide-react';
+import { Menu, X, Bike, LogIn, LogOut, LayoutDashboard, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink, Globe } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
-const navLinks = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/#about' },
-  { label: 'Cycles', to: '/all-cycles' },
-  { label: 'Brands', to: '/#brands' },
-  { label: 'Services', to: '/#services' },
-  { label: 'Reviews', to: '/#reviews' },
-  { label: 'Contact', to: '/#contact' },
+const navLinksData = [
+  { key: 'Home', to: '/' },
+  { key: 'About', to: '/#about' },
+  { key: 'Cycles', to: '/all-cycles' },
+  { key: 'Brands', to: '/#brands' },
+  { key: 'Services', to: '/#services' },
+  { key: 'Reviews', to: '/#reviews' },
+  { key: 'Contact', to: '/#contact' },
 ];
 
 function WishlistButton({ wishOpen, onToggle, onClose, compact = false, onToggleExtra }) {
   const { wishlistIds, wishlistItems, toggleWishlist } = useWishlist();
+  const { t } = useLanguage();
   const ref = useRef(null);
 
   const canHover =
@@ -66,7 +68,7 @@ function WishlistButton({ wishOpen, onToggle, onClose, compact = false, onToggle
               compact ? 'py-2' : 'py-3'
             }`}
           >
-            <span className={`text-txt font-semibold ${compact ? 'text-sm' : ''}`}>Wishlist</span>
+            <span className={`text-txt font-semibold ${compact ? 'text-sm' : ''}`}>{t('Wishlist')}</span>
             <span className="text-muted text-xs">
               {wishlistItems.length} item{wishlistItems.length !== 1 ? 's' : ''}
             </span>
@@ -76,9 +78,9 @@ function WishlistButton({ wishOpen, onToggle, onClose, compact = false, onToggle
             <div className={`text-center text-muted ${compact ? 'p-5' : 'p-6'}`}>
               <Heart className={`mx-auto mb-2 text-accent/60 ${compact ? 'w-6 h-6' : 'w-8 h-8'}`} />
               <p className={`text-txt font-semibold ${compact ? 'text-sm' : 'text-base'}`}>
-                Your Wishlist is Empty
+                {t('Your Wishlist is Empty')}
               </p>
-              <p className="text-xs mt-1.5">Add your favourite cycles to your wishlist.</p>
+              <p className="text-xs mt-1.5">{t('Add your favourite cycles to your wishlist.')}</p>
             </div>
           ) : (
             <div className={`overflow-y-auto ${compact ? 'max-h-72' : 'max-h-80'}`}>
@@ -129,7 +131,7 @@ className={`text-muted hover:text-accent transition-colors ${
                     className="btn-primary justify-center w-full text-sm py-2.5"
                   >
                     <ExternalLink className="w-4 h-4" />
-                    Shop All Cycles
+                    {t('Shop All Cycles')}
                   </Link>
                 </div>
               )}
@@ -144,13 +146,24 @@ className={`text-muted hover:text-accent transition-colors ${
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [wishOpen, setWishOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef(null);
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
+  const { t, language, setLanguage, languages, onDashboard } = useLanguage();
   const navigate = useNavigate();
+  const navLinks = navLinksData.map((l) => ({ ...l, label: t(l.key) }));
 
   const closeMenu = () => setIsOpen(false);
   const closeWish = useCallback(() => setWishOpen(false), []);
   const toggleWish = useCallback(() => setWishOpen((v) => !v), []);
+
+  useEffect(() => {
+    if (!langOpen) return;
+    const handleClick = (e) => { if (langRef.current && !langRef.current.contains(e.target)) setLangOpen(false); };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [langOpen]);
 
   const handleLogout = () => {
     logout();
@@ -186,6 +199,35 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <WishlistButton wishOpen={wishOpen} onToggle={toggleWish} onClose={closeWish} />
 
+              {!onDashboard && (
+                <div ref={langRef} className="relative">
+                  <button
+                    onClick={() => setLangOpen((v) => !v)}
+                    className="p-2 text-muted hover:text-accent transition-colors rounded-full hover:bg-surface flex items-center gap-1"
+                    aria-label="Change language"
+                  >
+                    <Globe className="w-5 h-5" />
+                  </button>
+                  {langOpen && (
+                    <div className="absolute right-0 top-12 card overflow-hidden z-50 shadow-2xl w-44 py-1">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => { setLanguage(lang.code); setLangOpen(false); }}
+                          className={`w-full text-left px-4 py-2.5 text-sm font-medium transition-colors ${
+                            language === lang.code
+                              ? 'text-accent bg-accent/10'
+                              : 'text-muted hover:text-accent hover:bg-surface'
+                          }`}
+                        >
+                          {lang.native}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <button
                 onClick={toggleTheme}
                 className="p-2 text-muted hover:text-accent transition-colors rounded-full hover:bg-surface"
@@ -197,17 +239,17 @@ export default function Navbar() {
                 <>
                   <Link to="/dashboard" className="btn-outline text-sm py-2.5 px-5">
                     <LayoutDashboard className="w-4 h-4" />
-                    Dashboard
+                    {t('Dashboard')}
                   </Link>
                   <button onClick={handleLogout} className="btn-primary text-sm py-2.5 px-5">
                     <LogOut className="w-4 h-4" />
-                    Logout
+                    {t('Logout')}
                   </button>
                 </>
               ) : (
                 <Link to="/login" className="btn-primary text-sm py-2.5 px-5">
                   <LogIn className="w-4 h-4" />
-                  Login
+                  {t('Login')}
                 </Link>
               )}
             </div>
@@ -272,14 +314,14 @@ export default function Navbar() {
                 className="btn-outline text-sm py-3 justify-center mt-2 mx-4"
               >
                 <LayoutDashboard className="w-4 h-4" />
-                Dashboard
+                {t('Dashboard')}
               </Link>
               <button
                 onClick={handleLogout}
                 className="btn-primary text-sm py-3 justify-center mt-2 mx-4 w-[calc(100%-32px)]"
               >
                 <LogOut className="w-4 h-4" />
-                Logout
+                {t('Logout')}
               </button>
             </>
           ) : (
@@ -289,8 +331,29 @@ export default function Navbar() {
               className="btn-primary text-sm py-3 justify-center mt-2 mx-4"
             >
               <LogIn className="w-4 h-4" />
-              Login
+              {t('Login')}
             </Link>
+          )}
+
+          {!onDashboard && (
+            <div className="px-4 mt-3 pt-3 border-t border-borderc/40">
+              <p className="text-[10px] text-muted uppercase tracking-wider font-semibold mb-2">Language</p>
+              <div className="grid grid-cols-2 gap-1.5">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => { setLanguage(lang.code); closeMenu(); }}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                      language === lang.code
+                        ? 'bg-accent/15 text-accent border border-accent/30'
+                        : 'bg-card text-muted hover:text-accent border border-borderc/40'
+                    }`}
+                  >
+                    {lang.native}
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
 
         </div>

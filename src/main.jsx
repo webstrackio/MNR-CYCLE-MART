@@ -5,6 +5,7 @@ import { MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import App from './App';
 import './index.css';
 
@@ -14,9 +15,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ThemeProvider>
         <WishlistProvider>
           <AuthProvider>
-            <MotionConfig reducedMotion="user">
-              <App />
-            </MotionConfig>
+            <LanguageProvider>
+              <MotionConfig reducedMotion="user">
+                <App />
+              </MotionConfig>
+            </LanguageProvider>
           </AuthProvider>
         </WishlistProvider>
       </ThemeProvider>

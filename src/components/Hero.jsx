@@ -1,8 +1,10 @@
 import { ArrowRight, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
+  const { t } = useLanguage();
   return (
     <section id="home" className="relative min-h-svh flex items-center bg-bg overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-svh z-0 bg-bg overflow-hidden">
@@ -31,7 +33,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 rounded-full px-4 py-1.5 mb-6"
             >
               <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              <span className="text-accent text-sm font-medium">Premium Cycle Showroom</span>
+              <span className="text-accent text-sm font-medium">{t('Premium Cycle Showroom')}</span>
             </motion.div>
 
             <motion.h1
@@ -40,9 +42,9 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-txt leading-tight mb-6"
             >
-              Find Your{' '}
-              <span className="text-accent">Perfect</span>{' '}
-              Ride
+              {t('Find Your')}{' '}
+              <span className="text-accent">{t('Perfect')}</span>{' '}
+              {t('Ride')}
             </motion.h1>
 
             <motion.p
@@ -51,7 +53,7 @@ export default function Hero() {
               transition={{ delay: 0.6, duration: 0.6 }}
               className="text-muted text-lg sm:text-xl max-w-lg mb-10 leading-relaxed"
             >
-              Discover quality cycles, trusted brands, and expert cycling services at{' '}
+              {t('Discover quality cycles, trusted brands, and expert cycling services at')}{' '}
               <span className="text-txt font-medium">M N R Cycle Mart</span>.
             </motion.p>
 
@@ -62,12 +64,12 @@ export default function Hero() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link to="/all-cycles" className="btn-primary text-base">
-                Explore Our Cycles
+                {t('Explore Our Cycles')}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link to="/#contact" className="btn-outline text-base">
                 <MapPin className="w-5 h-5" />
-                Visit Our Mart
+                {t('Visit Our Mart')}
               </Link>
             </motion.div>
           </motion.div>

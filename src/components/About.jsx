@@ -1,22 +1,24 @@
 import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import SectionTitle from './SectionTitle';
-
-const highlights = [
-  'Quality cycles from top brands',
-  'Expert guidance for every rider',
-  'Professional cycle servicing',
-  'Wide range of accessories',
-  'Customer-first approach',
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function About() {
+  const { t } = useLanguage();
+
+  const highlights = [
+    t('Quality cycles from top brands'),
+    t('Expert guidance for every rider'),
+    t('Professional cycle servicing'),
+    t('Wide range of accessories'),
+    t('Customer-first approach'),
+  ];
   return (
     <section id="about" className="bg-surface py-20 lg:py-28">
       <div className="section-padding">
         <SectionTitle
-          title="About M N R Cycle Mart"
-          subtitle="Your trusted local destination for quality cycles and cycling expertise."
+          title={t('About M N R Cycle Mart')}
+          subtitle={t('Your trusted local destination for quality cycles and cycling expertise.')}
         />
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -44,7 +46,7 @@ export default function About() {
                          px-6 py-4 rounded-2xl shadow-xl text-center"
             >
               <div className="text-2xl">20+</div>
-              <div className="text-xs opacity-80">Years of Trust</div>
+              <div className="text-xs opacity-80">{t('Years of Trust')}</div>
             </motion.div>
           </motion.div>
 
@@ -55,14 +57,10 @@ export default function About() {
             transition={{ duration: 0.7 }}
           >
             <p className="text-muted text-lg leading-relaxed mb-6">
-              At <span className="text-txt font-semibold">M N R Cycle Mart</span>, we believe
-              every rider deserves the perfect cycle. Whether you are a daily commuter, a weekend
-              adventurer, or a professional cyclist, we are here to help you find the ideal ride.
+              {t('At')} <span className="text-txt font-semibold">M N R Cycle Mart</span>, {t('we believe every rider deserves the perfect cycle. Whether you are a daily commuter, a weekend adventurer, or a professional cyclist, we are here to help you find the ideal ride.')}
             </p>
             <p className="text-muted/70 leading-relaxed mb-8">
-              With a carefully curated collection of cycles from trusted brands, expert service
-              support, and a passion for cycling, we have built a reputation as the go-to cycle
-              destination in the community.
+              {t('With a carefully curated collection of cycles from trusted brands, expert service support, and a passion for cycling, we have built a reputation as the go-to cycle destination in the community.')}
             </p>
 
             <ul className="space-y-3 mb-8">
@@ -76,7 +74,7 @@ export default function About() {
 
             <div className="border-l-4 border-accent pl-5 py-2">
               <p className="text-txt font-semibold text-lg italic">
-                Your Ride. Your Journey. Our Expertise.
+                {t('Your Ride. Your Journey. Our Expertise.')}
               </p>
             </div>
           </motion.div>

@@ -68,7 +68,7 @@ export default function DashboardReviews() {
               <input type="text" placeholder="Search reviews..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-surface border border-borderc rounded-xl pl-9 pr-4 py-2.5 text-sm text-txt placeholder:text-muted focus:outline-none focus:border-accent/50" />
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {[0, 5, 4, 3, 2, 1].map(r => (
                 <button key={r} onClick={() => setFilterRating(r)}
                   className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${filterRating === r ? 'bg-accent text-white' : 'bg-surface border border-borderc text-muted hover:border-white/20'}`}>

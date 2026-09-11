@@ -1,21 +1,24 @@
 import { Bike, MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const quickLinks = [
-  { label: 'Home', href: '/#home' },
-  { label: 'About', href: '/#about' },
-  { label: 'Cycles', href: '/#cycles' },
-  { label: 'Brands', href: '/#brands' },
-  { label: 'Services', href: '/#services' },
-  { label: 'Reviews', href: '/#reviews' },
-  { label: 'Contact', href: '/#contact' },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
+  const quickLinks = [
+    { label: t('Home'), href: '/#home' },
+    { label: t('About'), href: '/#about' },
+    { label: t('Cycles'), href: '/#cycles' },
+    { label: t('Brands'), href: '/#brands' },
+    { label: t('Services'), href: '/#services' },
+    { label: t('Reviews'), href: '/#reviews' },
+    { label: t('Contact'), href: '/#contact' },
+  ];
+
   return (
     <footer className="bg-bg border-t border-border">
       <div className="section-padding py-16 lg:py-20">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
           <div className="sm:col-span-2 lg:col-span-1">
             <Link to="/#home" className="flex items-center gap-2.5 mb-4">
               <Bike className="w-10 h-10 text-accent" />
@@ -24,7 +27,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-muted text-sm leading-relaxed mb-6">
-              Quality cycles, trusted brands, and reliable cycling services for every rider.
+              {t('Quality cycles, trusted brands, and reliable cycling services for every rider.')}
             </p>
             <div className="flex gap-3">
               <a
@@ -64,7 +67,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-txt font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-txt font-semibold mb-4">{t('Quick Links')}</h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.label}>
@@ -82,7 +85,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-txt font-semibold mb-4">Contact</h4>
+            <h4 className="text-txt font-semibold mb-4">{t('Contact')}</h4>
             <ul className="space-y-3">
               <li>
                 <a
@@ -128,14 +131,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-txt font-semibold mb-4">Business Hours</h4>
+            <h4 className="text-txt font-semibold mb-4">{t('Business Hours')}</h4>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-muted">Monday — Saturday</span>
+                <span className="text-muted">{t('Monday — Saturday')}</span>
                 <span className="text-txt font-medium">9:00 AM – 9:00 PM</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted">Sunday</span>
+                <span className="text-muted">{t('Sunday')}</span>
                 <span className="text-txt font-medium">9:00 AM – 6:00 PM</span>
               </div>
             </div>
@@ -147,7 +150,7 @@ export default function Footer() {
             &copy; M N R Cycle Mart. Since the 1980's, a trusted brand.
           </p>
           <p className="text-muted text-sm">
-            Your Ride. Your Journey. Our Expertise.
+            {t('Your Ride. Your Journey. Our Expertise.')}
           </p>
         </div>
       </div>

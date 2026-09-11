@@ -260,28 +260,28 @@ export default function Login() {
           </div>
 
           {/* Feature icons */}
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
             <div className="flex flex-col items-center gap-2">
-              <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center border border-borderc">
-                <Bike className="w-5 h-5 text-muted" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface flex items-center justify-center border border-borderc">
+                <Bike className="w-4 h-4 sm:w-5 sm:h-5 text-muted" />
               </div>
-              <p className="text-xs font-medium text-muted leading-tight">
+              <p className="text-[11px] sm:text-xs font-medium text-muted leading-tight">
                 Wide Range<br />of Cycles
               </p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center border border-borderc">
-                <ShieldCheck className="w-5 h-5 text-muted" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface flex items-center justify-center border border-borderc">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-muted" />
               </div>
-              <p className="text-xs font-medium text-muted leading-tight">
+              <p className="text-[11px] sm:text-xs font-medium text-muted leading-tight">
                 Secure<br />Login
               </p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center border border-borderc">
-                <Headphones className="w-5 h-5 text-muted" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface flex items-center justify-center border border-borderc">
+                <Headphones className="w-4 h-4 sm:w-5 sm:h-5 text-muted" />
               </div>
-              <p className="text-xs font-medium text-muted leading-tight">
+              <p className="text-[11px] sm:text-xs font-medium text-muted leading-tight">
                 24/7<br />Support
               </p>
             </div>

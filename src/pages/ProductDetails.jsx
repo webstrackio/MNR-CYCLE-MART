@@ -22,6 +22,7 @@ import Navbar from '../components/Navbar';
 import ScrollToTop from '../components/ScrollToTop';
 import cycles from '../data/cycles';
 import { useWishlist } from '../context/WishlistContext';
+import { useLanguage } from '../context/LanguageContext';
 import { viewportOnce } from '../lib/motion';
 
 const WHATSAPP = '918919267847';
@@ -62,6 +63,7 @@ export default function ProductDetails() {
   const images = cycle && cycle.images && cycle.images.length > 0 ? cycle.images : [cycle.image];
   const [selectedImage, setSelectedImage] = useState(0);
   const { isWishlisted, toggleWishlist } = useWishlist();
+  const { t } = useLanguage();
   const wishlisted = cycle ? isWishlisted(cycle.id) : false;
   const [copied, setCopied] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
@@ -130,9 +132,9 @@ export default function ProductDetails() {
         <div className="section-padding">
           {/* Breadcrumb */}
           <nav className="flex flex-wrap items-center gap-2 text-sm text-muted mb-6">
-            <Link to="/" className="hover:text-accent transition-colors">Home</Link>
+            <Link to="/" className="hover:text-accent transition-colors">{t('Home')}</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link to="/all-cycles" className="hover:text-accent transition-colors">All Cycles</Link>
+            <Link to="/all-cycles" className="hover:text-accent transition-colors">{t('All Cycles')}</Link>
             <ChevronRight className="w-4 h-4" />
             <span className="text-txt">{cycle.name}</span>
           </nav>
@@ -186,7 +188,7 @@ export default function ProductDetails() {
               <div className="p-6 sm:p-10 lg:p-12 flex flex-col">
                 <span className="inline-flex items-center gap-2 text-accent text-sm font-semibold mb-3">
                   <CheckCircle2 className="w-5 h-5" />
-                  Availability: In Stock
+                  {t('Availability: In Stock')}
                 </span>
 
                 <h1 className="text-3xl sm:text-4xl font-bold text-txt mb-4">{cycle.name}</h1>
@@ -196,7 +198,7 @@ export default function ProductDetails() {
                     <Stars rating={cycle.rating} />
                   </div>
                   <span className="text-accent font-bold text-lg">{cycle.rating.toFixed(1)}</span>
-                  <span className="text-muted text-sm">{details.reviewCount} Reviews</span>
+                   <span className="text-muted text-sm">{details.reviewCount} {t('Reviews')}</span>
                 </div>
 
                 <p className="text-muted text-base leading-relaxed mb-8">{cycle.description}</p>
@@ -208,10 +210,10 @@ export default function ProductDetails() {
                       <Accessibility className="w-6 h-6 text-accent flex-shrink-0" />
                       <div>
                         <p className="text-muted text-xs uppercase tracking-wider">
-                          {details.isSparePart ? 'Spare Parts' : 'Age'}
+                          {details.isSparePart ? t('Spare Parts') : t('Age')}
                         </p>
                         <p className="text-txt font-semibold">
-                          {details.isSparePart ? 'All Types' : details.age ?? 'All Ages'}
+                          {details.isSparePart ? t('All Types') : details.age ?? t('All Ages')}
                         </p>
                       </div>
                     </div>
@@ -219,10 +221,10 @@ export default function ProductDetails() {
                       <Ruler className="w-6 h-6 text-accent flex-shrink-0" />
                       <div>
                         <p className="text-muted text-xs uppercase tracking-wider">
-                          {details.isSparePart ? 'Cycle Type' : 'Frame Size'}
+                          {details.isSparePart ? t('Cycle Type') : t('Frame Size')}
                         </p>
                         <p className="text-txt font-semibold">
-                          {details.isSparePart ? 'All Types' : details.size ?? 'See Below'}
+                          {details.isSparePart ? t('All Types') : details.size ?? t('See Below')}
                         </p>
                       </div>
                     </div>
@@ -294,7 +296,7 @@ export default function ProductDetails() {
               <div className="p-6 sm:p-8">
                 <h2 className="text-lg sm:text-xl font-bold text-txt mb-2">More Images</h2>
                 <p className="text-muted text-sm mb-5">Tap a photo to preview it in the main gallery.</p>
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
                   {images.map((img, idx) => (
                     <button
                       key={img + idx}
