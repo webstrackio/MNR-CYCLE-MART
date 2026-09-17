@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Menu, X, Bike, LogIn, LogOut, LayoutDashboard, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink, Globe } from 'lucide-react';
+import { Menu, X, Bike, LogIn, LogOut, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink, Globe } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -236,16 +236,10 @@ export default function Navbar() {
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
               {user ? (
-                <>
-                  <Link to="/dashboard" className="btn-outline text-sm py-2.5 px-5">
-                    <LayoutDashboard className="w-4 h-4" />
-                    {t('Dashboard')}
-                  </Link>
-                  <button onClick={handleLogout} className="btn-primary text-sm py-2.5 px-5">
-                    <LogOut className="w-4 h-4" />
-                    {t('Logout')}
-                  </button>
-                </>
+                <button onClick={handleLogout} className="btn-primary text-sm py-2.5 px-5">
+                  <LogOut className="w-4 h-4" />
+                  {t('Logout')}
+                </button>
               ) : (
                 <Link to="/login" className="btn-primary text-sm py-2.5 px-5">
                   <LogIn className="w-4 h-4" />
@@ -307,23 +301,13 @@ export default function Navbar() {
             );
           })}
           {user ? (
-            <>
-              <Link
-                to="/dashboard"
-                onClick={closeMenu}
-                className="btn-outline text-sm py-3 justify-center mt-2 mx-4"
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                {t('Dashboard')}
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="btn-primary text-sm py-3 justify-center mt-2 mx-4 w-[calc(100%-32px)]"
-              >
-                <LogOut className="w-4 h-4" />
-                {t('Logout')}
-              </button>
-            </>
+            <button
+              onClick={handleLogout}
+              className="btn-primary text-sm py-3 justify-center mt-2 mx-4 w-[calc(100%-32px)]"
+            >
+              <LogOut className="w-4 h-4" />
+              {t('Logout')}
+            </button>
           ) : (
             <Link
               to="/login"

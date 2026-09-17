@@ -16,6 +16,7 @@ import DashboardReviews from './pages/DashboardReviews';
 import DashboardReports from './pages/DashboardReports';
 import DashboardSettings from './pages/DashboardSettings';
 import DashboardThemes from './pages/DashboardThemes';
+import DashboardBilling from './pages/DashboardBilling';
 import ScrollToHash from './components/ScrollToHash';
 import { useAuth } from './context/AuthContext';
 
@@ -127,6 +128,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <DashboardThemes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/billing"
+          element={
+            <ProtectedRoute>
+              <DashboardBilling />
             </ProtectedRoute>
           }
         />

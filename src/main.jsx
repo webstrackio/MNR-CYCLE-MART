@@ -6,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { StoreProvider } from './context/StoreContext';
 import App from './App';
 import './index.css';
 
@@ -15,11 +16,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ThemeProvider>
         <WishlistProvider>
           <AuthProvider>
-            <LanguageProvider>
-              <MotionConfig reducedMotion="user">
-                <App />
-              </MotionConfig>
-            </LanguageProvider>
+            <StoreProvider>
+              <LanguageProvider>
+                <MotionConfig reducedMotion="user">
+                  <App />
+                </MotionConfig>
+              </LanguageProvider>
+            </StoreProvider>
           </AuthProvider>
         </WishlistProvider>
       </ThemeProvider>

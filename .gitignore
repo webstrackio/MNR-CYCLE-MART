@@ -1,3 +1,8 @@
 node_modules/
 dist/
 .idea/
+
+# Local environment variables (never commit keys)
+.env
+.env.local
+.env.*.local

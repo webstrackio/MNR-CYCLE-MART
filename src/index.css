@@ -183,3 +183,17 @@
     scrollbar-width: none;
   }
 }
+
+/* ── Print: isolate invoice only ─────────────────────────────── */
+@media print {
+  /* Hide everything on the page */
+  body > * {
+    display: none !important;
+  }
+  /* The print window opened by window.open() prints the full page */
+  /* This rule ensures if someone prints the dashboard page itself,
+     only .print-invoice elements show (future-proofing) */
+  .no-print {
+    display: none !important;
+  }
+}
