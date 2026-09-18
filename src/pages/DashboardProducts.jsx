@@ -19,13 +19,15 @@ const productTemplates = {
   'Hybrid': { name: 'Hybrid Comfort Plus', price: '15999', description: 'Versatile hybrid bike for both city and trail riding', weight: '12.8', color: 'Forest Green' },
 };
 
+const emptyForm = { name: '', category: '', price: '', description: '', stock: '', weight: '', color: '', sku: '' };
+
 export default function DashboardProducts() {
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [viewing, setViewing] = useState(null);
   const [products, setProducts] = useState(sampleProducts);
   const [searchTerm, setSearchTerm] = useState('');
-  const [formData, setFormData] = useState({
-    name: '', category: '', price: '', description: '', stock: '', weight: '', color: '', sku: ''
-  });
+  const [formData, setFormData] = useState(emptyForm);
 
   const handleAutoFill = (category) => {
     const template = productTemplates[category];
@@ -43,20 +45,57 @@ export default function DashboardProducts() {
     }
   };
 
+  const openAdd = () => {
+    setEditingId(null);
+    setFormData(emptyForm);
+    setShowForm(true);
+  };
+
+  const openEdit = (product) => {
+    setEditingId(product.id);
+    setFormData({
+      name: product.name,
+      category: product.category,
+      price: String(Number(String(product.price).replace(/[^\d]/g, '')) || ''),
+      description: product.description || '',
+      stock: String(product.stock),
+      weight: product.weight || '',
+      color: product.color || '',
+      sku: product.sku || '',
+    });
+    setShowForm(true);
+  };
+
+  const buildProduct = () => ({
+    name: formData.name,
+    category: formData.category,
+    price: `₹ ${Number(formData.price).toLocaleString('en-IN')}`,
+    stock: parseInt(formData.stock) || 0,
+    status: (parseInt(formData.stock) || 0) > 5 ? 'Active' : (parseInt(formData.stock) || 0) > 0 ? 'Low Stock' : 'Out of Stock',
+    description: formData.description,
+    weight: formData.weight,
+    color: formData.color,
+    sku: formData.sku,
+    image: formData.category === 'E-Bike' ? '🔋' : '🚲',
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newProduct = {
-      id: products.length + 1,
-      name: formData.name,
-      category: formData.category,
-      price: `₹ ${Number(formData.price).toLocaleString('en-IN')}`,
-      stock: parseInt(formData.stock),
-      status: parseInt(formData.stock) > 5 ? 'Active' : parseInt(formData.stock) > 0 ? 'Low Stock' : 'Out of Stock',
-      image: formData.category === 'E-Bike' ? '🔋' : '🚲'
-    };
-    setProducts([...products, newProduct]);
+    if (editingId) {
+      setProducts(products.map((p) => (p.id === editingId ? { ...p, ...buildProduct() } : p)));
+    } else {
+      const newProduct = { id: products.length + 1, ...buildProduct() };
+      setProducts([...products, newProduct]);
+    }
     setShowForm(false);
-    setFormData({ name: '', category: '', price: '', description: '', stock: '', weight: '', color: '', sku: '' });
+    setEditingId(null);
+    setFormData(emptyForm);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      setProducts(products.filter((p) => p.id !== id));
+    }
   };
 
   const filteredProducts = products.filter(p => 
@@ -78,7 +117,7 @@ export default function DashboardProducts() {
           />
         </div>
         <button
-          onClick={() => setShowForm(true)}
+          onClick={openAdd}
           className="bg-accent hover:bg-accenthover text-white font-semibold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors"
         >
           <Plus className="w-4 h-4" />
@@ -126,13 +165,13 @@ export default function DashboardProducts() {
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-2">
-                      <button className="p-1.5 text-muted hover:text-accent transition-colors">
+                      <button onClick={() => setViewing(product)} className="p-1.5 text-muted hover:text-accent transition-colors" aria-label={`View ${product.name}`}>
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="p-1.5 text-muted hover:text-accent transition-colors">
+                      <button onClick={() => openEdit(product)} className="p-1.5 text-muted hover:text-accent transition-colors" aria-label={`Edit ${product.name}`}>
                         <Edit2 className="w-4 h-4" />
                       </button>
-                      <button className="p-1.5 text-muted hover:text-red-400 transition-colors">
+                      <button onClick={() => handleDelete(product.id)} className="p-1.5 text-muted hover:text-red-400 transition-colors" aria-label={`Delete ${product.name}`}>
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
@@ -152,7 +191,7 @@ export default function DashboardProducts() {
             className="bg-surface border border-borderc rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-borderc">
-              <h2 className="text-txt text-lg font-bold">Add New Product</h2>
+              <h2 className="text-txt text-lg font-bold">{editingId ? 'Edit Product' : 'Add New Product'}</h2>
               <button onClick={() => setShowForm(false)} className="text-muted hover:text-txt">
                 <X className="w-5 h-5" />
               </button>
@@ -277,6 +316,67 @@ export default function DashboardProducts() {
                 </button>
               </div>
             </form>
+          </motion.div>
+        </div>
+      )}
+    {viewing && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface border border-borderc rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-borderc">
+              <h2 className="text-txt text-lg font-bold">Product Details</h2>
+              <button onClick={() => setViewing(null)} className="text-muted hover:text-txt">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="flex items-center gap-4 mb-5">
+                <span className="text-4xl">{viewing.image}</span>
+                <div>
+                  <p className="text-txt font-bold text-lg">{viewing.name}</p>
+                  <p className="text-muted text-sm">{viewing.category}</p>
+                </div>
+              </div>
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  ['Price', viewing.price],
+                  ['Stock', viewing.stock],
+                  ['Status', viewing.status],
+                  ['SKU', viewing.sku || '—'],
+                  ['Weight (kg)', viewing.weight || '—'],
+                  ['Color', viewing.color || '—'],
+                ].map(([label, value]) => (
+                  <div key={label} className="bg-card border border-borderc rounded-xl p-3">
+                    <dt className="text-muted text-xs font-medium mb-1">{label}</dt>
+                    <dd className="text-txt text-sm font-semibold">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              {viewing.description && (
+                <div className="mt-3 bg-card border border-borderc rounded-xl p-3">
+                  <p className="text-muted text-xs font-medium mb-1">Description</p>
+                  <p className="text-txt text-sm">{viewing.description}</p>
+                </div>
+              )}
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={() => { openEdit(viewing); setViewing(null); }}
+                  className="flex-1 bg-accent hover:bg-accenthover text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Edit2 className="w-4 h-4" />
+                  Edit Product
+                </button>
+                <button
+                  onClick={() => setViewing(null)}
+                  className="flex-1 bg-card hover:bg-card/80 text-muted font-semibold py-2.5 rounded-xl transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </motion.div>
         </div>
       )}

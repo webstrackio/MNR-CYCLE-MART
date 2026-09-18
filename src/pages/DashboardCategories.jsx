@@ -21,11 +21,14 @@ const categoryTemplates = {
   'Accessories': { description: 'Helmets, locks, lights, and more', icon: '🎯' },
 };
 
+const emptyForm = { name: '', description: '', icon: '' };
+
 export default function DashboardCategories() {
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [categories, setCategories] = useState(sampleCategories);
   const [searchTerm, setSearchTerm] = useState('');
-  const [formData, setFormData] = useState({ name: '', description: '', icon: '' });
+  const [formData, setFormData] = useState(emptyForm);
 
   const handleAutoFill = (name) => {
     const template = categoryTemplates[name];
@@ -34,12 +37,49 @@ export default function DashboardCategories() {
     }
   };
 
+  const openAdd = () => {
+    setEditingId(null);
+    setFormData(emptyForm);
+    setShowForm(true);
+  };
+
+  const openEdit = (cat) => {
+    setEditingId(cat.id);
+    const template = categoryTemplates[cat.name] || {};
+    setFormData({
+      name: cat.name,
+      description: cat.description || template.description || '',
+      icon: cat.icon || template.icon || '📦',
+    });
+    setShowForm(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newCategory = { id: categories.length + 1, name: formData.name, products: 0, status: 'Active' };
-    setCategories([...categories, newCategory]);
+    if (editingId) {
+      setCategories(categories.map((c) => (c.id === editingId
+        ? { ...c, name: formData.name, description: formData.description, icon: formData.icon }
+        : c)));
+    } else {
+      const newCategory = {
+        id: categories.length + 1,
+        name: formData.name,
+        products: 0,
+        status: 'Active',
+        description: formData.description,
+        icon: formData.icon,
+      };
+      setCategories([...categories, newCategory]);
+    }
     setShowForm(false);
-    setFormData({ name: '', description: '', icon: '' });
+    setEditingId(null);
+    setFormData(emptyForm);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this category?')) {
+      setCategories(categories.filter((c) => c.id !== id));
+    }
   };
 
   const filtered = categories.filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -52,7 +92,7 @@ export default function DashboardCategories() {
           <input type="text" placeholder="Search categories..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-surface border border-borderc rounded-xl pl-9 pr-4 py-2.5 text-sm text-txt placeholder:text-muted focus:outline-none focus:border-accent/50 transition-colors" />
         </div>
-        <button onClick={() => setShowForm(true)} className="bg-accent hover:bg-accenthover text-white font-semibold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors">
+        <button onClick={openAdd} className="bg-accent hover:bg-accenthover text-white font-semibold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors">
           <Plus className="w-4 h-4" /> Add Category
         </button>
       </div>
@@ -62,14 +102,15 @@ export default function DashboardCategories() {
           <div key={cat.id} className="bg-surface border border-borderc rounded-2xl p-5 hover:border-accent/20 transition-all">
             <div className="flex items-start justify-between mb-3">
               <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-2xl">
-                {categoryTemplates[cat.name]?.icon || '📦'}
+                {cat.icon || categoryTemplates[cat.name]?.icon || '📦'}
               </div>
               <div className="flex items-center gap-1">
-                <button className="p-1.5 text-muted hover:text-accent transition-colors"><Edit2 className="w-4 h-4" /></button>
-                <button className="p-1.5 text-muted hover:text-red-400 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                <button onClick={() => openEdit(cat)} title="Edit category" className="p-1.5 text-muted hover:text-accent transition-colors"><Edit2 className="w-4 h-4" /></button>
+                <button onClick={() => handleDelete(cat.id)} title="Delete category" className="p-1.5 text-muted hover:text-red-400 transition-colors"><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>
             <h3 className="text-txt font-bold text-lg mb-1">{cat.name}</h3>
+            {cat.description && <p className="text-muted text-sm">{cat.description}</p>}
             <p className="text-muted text-sm">{cat.products} products</p>
             <span className="inline-block mt-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500/20 text-green-400">{cat.status}</span>
           </div>
@@ -80,7 +121,7 @@ export default function DashboardCategories() {
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-surface border border-borderc rounded-2xl w-full max-w-lg">
             <div className="flex items-center justify-between px-6 py-4 border-b border-borderc">
-              <h2 className="text-txt text-lg font-bold">Add New Category</h2>
+              <h2 className="text-txt text-lg font-bold">{editingId ? 'Edit Category' : 'Add New Category'}</h2>
               <button onClick={() => setShowForm(false)} className="text-muted hover:text-txt"><X className="w-5 h-5" /></button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -104,6 +145,11 @@ export default function DashboardCategories() {
                 <label className="text-muted text-xs font-medium mb-1.5 block">Description</label>
                 <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows={3}
                   className="w-full bg-card border border-borderc rounded-xl px-4 py-2.5 text-sm text-txt focus:outline-none focus:border-accent/50 resize-none" />
+              </div>
+              <div>
+                <label className="text-muted text-xs font-medium mb-1.5 block">Icon (emoji)</label>
+                <input type="text" value={formData.icon} onChange={(e) => setFormData({...formData, icon: e.target.value})}
+                  className="w-full bg-card border border-borderc rounded-xl px-4 py-2.5 text-sm text-txt focus:outline-none focus:border-accent/50" />
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowForm(false)} className="flex-1 bg-card hover:bg-card/80 text-muted font-semibold py-2.5 rounded-xl">Cancel</button>
