@@ -7,6 +7,7 @@ import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { StoreProvider } from './context/StoreContext';
+import { NotificationProvider } from './context/NotificationContext';
 import App from './App';
 import './index.css';
 
@@ -17,11 +18,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <WishlistProvider>
           <AuthProvider>
             <StoreProvider>
-              <LanguageProvider>
-                <MotionConfig reducedMotion="user">
-                  <App />
-                </MotionConfig>
-              </LanguageProvider>
+              <NotificationProvider>
+                <LanguageProvider>
+                  <MotionConfig reducedMotion="user">
+                    <App />
+                  </MotionConfig>
+                </LanguageProvider>
+              </NotificationProvider>
             </StoreProvider>
           </AuthProvider>
         </WishlistProvider>
