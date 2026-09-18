@@ -31,9 +31,9 @@ export default function About() {
           >
             <div className="relative rounded-2xl overflow-hidden">
               <img
-                src="/pom.jpeg"
+                src="/exbackground.png"
                 alt="Cycle shop interior"
-                className="w-full h-[400px] lg:h-[500px] object-cover rounded-2xl"
+                className="w-full h-[400px] lg:h-[500px] object-contain rounded-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-surface/80 via-transparent to-transparent" />
             </div>

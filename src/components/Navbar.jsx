@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Menu, X, Bike, LogIn, LogOut, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink, Globe } from 'lucide-react';
+import { Menu, X, Bike, LogIn, LogOut, ChevronRight, Sun, Moon, Heart, Trash2, ExternalLink, Globe, ShoppingCart } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -197,6 +197,13 @@ export default function Navbar() {
             </div>
 
             <div className="hidden lg:flex items-center gap-3">
+              <Link
+                to="/all-cycles"
+                className="p-2 text-muted hover:text-accent transition-colors rounded-full hover:bg-surface"
+                aria-label="Shop cycles"
+              >
+                <ShoppingCart className="w-5 h-5" />
+              </Link>
               <WishlistButton wishOpen={wishOpen} onToggle={toggleWish} onClose={closeWish} />
 
               {!onDashboard && (
@@ -249,6 +256,14 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center lg:hidden">
+              <Link
+                to="/all-cycles"
+                onClick={closeMenu}
+                className="p-2 text-muted hover:text-accent transition-colors"
+                aria-label="Shop cycles"
+              >
+                <ShoppingCart className="w-5 h-5" />
+              </Link>
               <WishlistButton
                 wishOpen={wishOpen}
                 onToggle={toggleWish}
